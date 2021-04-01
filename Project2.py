@@ -160,7 +160,19 @@ def extra_credit(filepath):
 	Please see the instructions document for more information on how to complete this function.
 	You do not have to write test cases for this function.
 	"""
-	pass
+	with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), filepath), 'r') as f:    
+		data = f.read()
+	
+	soup = BeautifulSoup(data, "html.parser")
+
+	div = soup.find("div", class_="readable stacked")
+	description = div.find("span", id="freeText4791443123668479528").text.strip()
+
+	regex = r"\b[A-Z]\w.\w+(?:\s[A-Z]\w+)+"
+	NameEntities = []
+	NameEntities.extend(re.findall(regex, description))
+	
+	return NameEntities
 
 class TestCases(unittest.TestCase):
 

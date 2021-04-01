@@ -25,12 +25,12 @@ def get_titles_from_search_results(filename):
 		bookList.append(bookTag.text.strip())
 	
 	authorList = []
-	authorTags = soup.find_all('span', itemprop = "author")
+	authorTags = soup.find_all('div', class_ = "authorName__container")
 	for authorTag in authorTags:
 		authorList.append(authorTag.text.strip())
 
 	tupleList = []
-	for x in range(len(authorList)):
+	for x in range(len(bookList)):
 		tupleList.append((bookList[x], authorList[x]))
 
 	return tupleList
@@ -192,7 +192,7 @@ class TestCases(unittest.TestCase):
 		# check that the first book and author tuple is correct (open search_results.htm and find it)
 		self.assertEqual(tupleList[0], ("Harry Potter and the Deathly Hallows (Harry Potter, #7)", "J.K. Rowling"))
 		# check that the last title is correct (open search_results.htm and find it)
-		self.assertEqual(tupleList[19], ("Harry Potter: The Prequel (Harry Potter, #0.5)", "J.K. Rowling"))
+		self.assertEqual(tupleList[19], ("Harry Potter: The Prequel (Harry Potter, #0.5)", "Julian Harrison (Introduction)"))
 
 	def test_get_search_links(self):
 		# check that TestCases.search_urls is a list
@@ -260,7 +260,7 @@ class TestCases(unittest.TestCase):
 		# check that the next row is 'Harry Potter and the Deathly Hallows (Harry Potter, #7)', 'J.K. Rowling'
 		self.assertEqual(csv_lines[1], ["Harry Potter and the Deathly Hallows (Harry Potter, #7)", "J.K. Rowling"])
 		# check that the last row is 'Harry Potter: The Prequel (Harry Potter, #0.5)', 'J.K. Rowling'
-		self.assertEqual(csv_lines[-1], ["Harry Potter: The Prequel (Harry Potter, #0.5)", "J.K. Rowling"])		
+		self.assertEqual(csv_lines[-1], ["Harry Potter: The Prequel (Harry Potter, #0.5)", "Julian Harrison (Introduction)"])		
 
 if __name__ == '__main__':
 	print(extra_credit("extra_credit.htm"))
